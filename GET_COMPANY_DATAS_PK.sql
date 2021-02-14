@@ -105,6 +105,10 @@ create or replace PACKAGE BODY GET_COMPANY_DATAS_PK AS
                                     )IS 
  
          LV_FORMATED_CNPJ VARCHAR2(14) := TRIM(REPLACE(REPLACE(REPLACE(P_CNPJ, '/', ''),'.', '' ), '-','')); 
+<<<<<<< HEAD
+=======
+         LN_CNPJ_NUMBER NUMBER; 
+>>>>>>> 21724e45dbe718c357cf76f107eee7a3f6f8c075
          LV_URL_WEB_SERVICE VARCHAR2(4000); 
          LN_STATUS_CODE NUMBER; 
          LV_RETURN_DATAS_CNPJ VARCHAR2(32767);   
@@ -113,6 +117,17 @@ create or replace PACKAGE BODY GET_COMPANY_DATAS_PK AS
     BEGIN 
             
           IF LENGTH(TRIM(LV_FORMATED_CNPJ)) = 14 THEN  
+<<<<<<< HEAD
+=======
+                 
+            BEGIN 
+                LN_CNPJ_NUMBER := TO_NUMBER(LV_FORMATED_CNPJ); 
+            EXCEPTION 
+             WHEN OTHERS THEN 
+                P_ERROR_MSG := INITCAP('ERRO NUMERO DO CNPJ INVALIDO. '); 
+                RAISE_APPLICATION_ERROR(-20001, 'ERRO NUMERO DO CNPJ INVALIDO. '||SQLCODE||' - '||SQLERRM); 
+            END; 
+>>>>>>> 21724e45dbe718c357cf76f107eee7a3f6f8c075
 			
 		   BEGIN
 		   
@@ -125,7 +140,11 @@ create or replace PACKAGE BODY GET_COMPANY_DATAS_PK AS
 		   
 		   IF LN_CONT_REG_COMPANY = 0 THEN
 		   
+<<<<<<< HEAD
 			LV_URL_WEB_SERVICE := 'https://www.receitaws.com.br/v1/cnpj/'||LV_FORMATED_CNPJ; 
+=======
+			LV_URL_WEB_SERVICE := 'https://www.receitaws.com.br/v1/cnpj/'||LN_CNPJ_NUMBER; 
+>>>>>>> 21724e45dbe718c357cf76f107eee7a3f6f8c075
 			 
             GET_COMPANY_DATAS_PK.MSG_P(P_MSG => 'URL: '||LV_URL_WEB_SERVICE||CHR(13), 
                                        P_SHOW => 'N'); 
@@ -283,8 +302,13 @@ create or replace PACKAGE BODY GET_COMPANY_DATAS_PK AS
     EXCEPTION 
      WHEN OTHERS THEN 
        P_ERROR_MSG := INITCAP('ERRO AO TENTAR EXECUTAR A PROCEDURE READ_COMPANY_DATAS_P. . VERIFQUE SE O CNPJ NAO ESTA INVALIDO.'); 
+<<<<<<< HEAD
        RAISE_APPLICATION_ERROR(-20004, 'ERRO AO TENTAR EXECUTAR A PROCEDURE READ_COMPANY_DATAS_P. VERIFQUE SE O CNPJ NAO ESTA INVALIDO '
 	                                   ||'CNPJ: '||LV_FORMATED_CNPJ||' ' ||SQLCODE||' - '||SQLERRM); 
+=======
+       RAISE_APPLICATION_ERROR(-20004, 'ERRO AO TENTAR EXECUTAR A PROCEDURE READ_COMPANY_DATAS_P. VERIFQUE SE O CNPJ NAO ESTA INVALIDO ' 
+                                       ||SQLCODE||' - '||SQLERRM); 
+>>>>>>> 21724e45dbe718c357cf76f107eee7a3f6f8c075
     END READ_COMPANY_DATAS_P; 
  
     PROCEDURE MSG_P(P_MSG IN VARCHAR2, 
